@@ -88,7 +88,7 @@ extension StockSymbolsListViewController: UITableViewDataSource, UITableViewDele
         
         let stock = viewModel.stocks[indexPath.row]
         
-        let vc = StockSymbolDetailViewController()
+        let vc: StockSymbolDetailViewController = UIStoryboard(name: "StockSymbolDetail", bundle: nil).instantiateViewController(withIdentifier: "StockSymbolDetailViewController") as! StockSymbolDetailViewController
         vc.configure(symbol: stock.symbol, stockManager: viewModel.stockManager)
         
         navigationController?.pushViewController(vc, animated: true)

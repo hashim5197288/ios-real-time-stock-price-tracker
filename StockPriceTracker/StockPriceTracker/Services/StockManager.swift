@@ -6,9 +6,9 @@
 //
 
 import Foundation
+import Combine
 
 protocol StockManagerDelegate: AnyObject {
-    func didUpdateStocks(_ stocks: [StockSybmolDataModel])
     func didUpdateConnection(_ isConnected: Bool)
 }
 
@@ -17,7 +17,7 @@ final class StockManager {
     weak var delegate: StockManagerDelegate?
     
     private let socket = WebSocketManager()
-    private(set) var stocks: [StockSybmolDataModel] = []
+    @Published private(set) var stocks: [StockSybmolDataModel] = []
     
     private var timer: Timer?
     
@@ -86,7 +86,7 @@ extension StockManager: WebSocketManagerDelegate {
             stocks[index].price = price
             stocks[index].change = price - oldPrice
             
-            delegate?.didUpdateStocks(stocks)
+            self.stocks = stocks
         }
     }
     

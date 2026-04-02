@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol StockSymbolListViewModelDelegate: AnyObject {
     func didReload()
@@ -14,6 +15,7 @@ protocol StockSymbolListViewModelDelegate: AnyObject {
 
 final class StockSymbolListViewModel {
     weak var delegate: StockSymbolListViewModelDelegate?
+    private var cancellables = Set<AnyCancellable>()
     
     let stockManager: StockManager
     private(set) var stocks: [StockSybmolDataModel] = []
@@ -25,6 +27,7 @@ final class StockSymbolListViewModel {
 
     func loadStocks() {
         stocks = stockManager.getStocks()
+        bindStocks()
         delegate?.didReload()
     }
     
@@ -45,16 +48,21 @@ final class StockSymbolListViewModel {
         stocks.sort { $0.change > $1.change }
         delegate?.didReload()
     }
+    
+    private func bindStocks() {
+        stockManager.$stocks
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] stocks in
+                guard let self = self else { return }
+                self.stocks = stocks
+                delegate?.didReload()
+            }
+            .store(in: &cancellables)
+    }
 }
 
 // MARK: - StockManager Delegate
 extension StockSymbolListViewModel: StockManagerDelegate {
-    
-    func didUpdateStocks(_ stocks: [StockSybmolDataModel]) {
-        self.stocks = stocks
-        delegate?.didReload()
-    }
-    
     func didUpdateConnection(_ isConnected: Bool) {
         delegate?.didUpdateConnection(isConnected)
     }
