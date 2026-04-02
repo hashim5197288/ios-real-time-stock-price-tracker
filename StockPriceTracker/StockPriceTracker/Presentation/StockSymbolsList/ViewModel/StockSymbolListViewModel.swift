@@ -18,7 +18,7 @@ final class StockSymbolListViewModel {
     private var cancellables = Set<AnyCancellable>()
     
     let stockManager: StockManager
-    private(set) var stocks: [StockSybmolDataModel] = []
+    private(set) var stocks: [StockSymbolDataModel] = []
 
     init(stockManager: StockManager) {
         self.stockManager = stockManager

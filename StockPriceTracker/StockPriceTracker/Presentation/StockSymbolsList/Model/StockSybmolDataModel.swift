@@ -1,5 +1,5 @@
 //
-//  StockSybmolDataModel.swift
+//  StockSymbolDataModel.swift
 //  StockPriceTracker
 //
 //  Created by M.Hashim on 02/04/2026.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StockSybmolDataModel {
+struct StockSymbolDataModel {
     let symbol: String
     let name: String
     let description: String

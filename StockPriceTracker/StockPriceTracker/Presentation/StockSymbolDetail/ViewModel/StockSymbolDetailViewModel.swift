@@ -9,10 +9,10 @@ import Foundation
 import Combine
 
 protocol StockSymbolDetailViewModelDelegate: AnyObject {
-    func didUpdateStock(_ stock: StockSybmolDataModel)
+    func didUpdateStock(_ stock: StockSymbolDataModel)
 }
 
-final class StockDetailViewModel {
+final class StockSymbolDetailViewModel {
 
     weak var delegate: StockSymbolDetailViewModelDelegate?
     private var cancellables = Set<AnyCancellable>()
@@ -30,7 +30,7 @@ final class StockDetailViewModel {
         bindStocks()
     }
     
-    private func filterStockDetail(allStocks: [StockSybmolDataModel] ) {
+    private func filterStockDetail(allStocks: [StockSymbolDataModel] ) {
         if let stock = allStocks.first(where: { $0.symbol == symbol }) {
             delegate?.didUpdateStock(stock)
         }

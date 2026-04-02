@@ -8,30 +8,28 @@
 import UIKit
 
 final class StockSymbolDetailViewController: UIViewController {
-
     @IBOutlet weak var companyNameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var changeLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    private var viewModel: StockDetailViewModel!
-
+    private var viewModel: StockSymbolDetailViewModel!
+    
     func configure(symbol: String, stockManager: StockManager) {
-        viewModel = StockDetailViewModel(stockManager: stockManager, symbol: symbol)
+        viewModel = StockSymbolDetailViewModel(stockManager: stockManager, symbol: symbol)
         viewModel.delegate = self
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.loadStockDetails()
     }
 }
 
-// MARK: - ViewModel Delegate -
-
+// MARK: - StockSymbolDetailViewModel Delegate
 extension StockSymbolDetailViewController: StockSymbolDetailViewModelDelegate {
     
-    func didUpdateStock(_ stock: StockSybmolDataModel) {
+    func didUpdateStock(_ stock: StockSymbolDataModel) {
         DispatchQueue.main.async {[weak self] in
             guard let self = self else { return }
             title = stock.symbol

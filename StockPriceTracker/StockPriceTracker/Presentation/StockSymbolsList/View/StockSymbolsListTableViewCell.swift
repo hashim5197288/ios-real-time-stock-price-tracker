@@ -12,7 +12,7 @@ class StockSymbolsListTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var changeLabel: UILabel!
 
-    func configureCell(_ stock: StockSybmolDataModel) {
+    func configureCell(_ stock: StockSymbolDataModel) {
         symbolLabel.text = stock.symbol
         priceLabel.text = "$\(stock.price.formatToTwoDecimal())"
         changeLabel.text = "\(stock.change.formatToTwoDecimal())"

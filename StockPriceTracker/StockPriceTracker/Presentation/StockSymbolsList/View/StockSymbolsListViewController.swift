@@ -8,20 +8,17 @@
 import UIKit
 
 final class StockSymbolsListViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var priceFeedSwitch: UISwitch!
     
     private var viewModel: StockSymbolListViewModel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
     }
-
-    // MARK: - Setup -
-
     private func setup() {
         let stockManager = StockManager()
         viewModel = StockSymbolListViewModel(stockManager: stockManager)
@@ -32,8 +29,7 @@ final class StockSymbolsListViewController: UIViewController {
         
         viewModel.loadStocks()
     }
-
-    // MARK: - Actions
+    
     @IBAction func priceFeedSwitchAction(_ sender: UISwitch) {
         sender.isOn ? viewModel.startFeed() :  viewModel.stopFeed()
     }
@@ -41,11 +37,11 @@ final class StockSymbolsListViewController: UIViewController {
     @IBAction func sortListButton(_ sender: UIButton) {
         showSortingOptions()
     }
-
+    
     private func sortPriceTapped() {
         viewModel.sortByPrice()
     }
-
+    
     private func sortChangeTapped() {
         viewModel.sortByChange()
     }
@@ -64,7 +60,7 @@ final class StockSymbolsListViewController: UIViewController {
     }
 }
 
-// MARK: - TableView -
+// MARK: - TableView handling
 
 extension StockSymbolsListViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -95,7 +91,7 @@ extension StockSymbolsListViewController: UITableViewDataSource, UITableViewDele
     }
 }
 
-// MARK: - StockSymbolListViewModel Delegate
+// MARK: - StockSymbolListViewModel Delegates
 extension StockSymbolsListViewController: StockSymbolListViewModelDelegate {
     
     func didReload() {
